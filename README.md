@@ -105,8 +105,7 @@ api-automation-tool/
 ├── Test_API_Collection.json    # Sample Postman collection
 ├── requirements.txt            # Python dependencies
 ├── README.md                   # User documentation
-├── QUICK_START.md             # Quick start guide
-└── GITHUB_README.md           # This file
+└── QUICK_START.md             # Quick start guide
 ```
 
 ## 🧪 Testing
