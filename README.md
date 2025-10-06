@@ -2,6 +2,9 @@
 
 A powerful, zero-config GUI application for testing APIs from Postman collections. Import any collection, run individual requests, or automate entire test suites with dynamic data and automatic authentication handling.
 
+<img width="1915" height="1138" alt="image" src="https://github.com/user-attachments/assets/3a1edd33-cabc-458b-9a7b-5c862ffad42a" />
+
+
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)
