@@ -1,186 +1,102 @@
-# 🚀 API Test Automation Tool
+# API Test Automation Tool
 
-A powerful, zero-config GUI application for testing APIs from Postman collections. Import any collection, run individual requests, or automate entire test suites with dynamic data and automatic authentication handling.
+A zero-config, GUI-based API runner for Postman collections. Import a collection, pick endpoints, and run single requests or full automations with dynamic data and XSRF handling.
 
-<img width="1915" height="1138" alt="image" src="https://github.com/user-attachments/assets/3a1edd33-cabc-458b-9a7b-5c862ffad42a" />
+## Quick start
 
-
-![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
-![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)
-
-## ✨ Features
-
-- **📥 Import Any Collection**: Works with any Postman collection JSON
-- **🔐 Smart Authentication**: Automatic Bearer token and XSRF token handling
-- **🤖 Test Automation**: Queue and run multiple API calls sequentially
-- **🎯 Dynamic Templates**: Edit request data and save custom templates
-- **📊 Detailed Logging**: Complete request/response details with timing
-- **💾 Export Results**: Save logs and copy to clipboard
-- **🎨 Modern UI**: Clean, intuitive interface with emoji indicators
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Python 3.8 or higher
+Requirements:
+- Python 3.8+
 - Windows, macOS, or Linux
 
-### Installation
+Install dependencies:
 ```bash
-# Clone the repository
-git clone https://github.com/furkankirmaci/api-automation.git
-cd api-automation
-
-# Install dependencies
 pip install -r requirements.txt
+```
 
-# Run the application
+Run the app:
+```bash
 python api_automation_tool.py
 ```
 
-### Test with Sample Collection
-```bash
-# Start the included test server
-python Test_API_Server.py
+## What you can do
 
-# Import Test_API_Collection.json in the tool
-# Login with: admin / password123
-# Run automation to see it in action!
-```
+- Import a Postman collection and browse categories/subcategories
+- Load a method’s request as an editable template (headers, body, params)
+- Send one-off requests from the builder
+- Queue multiple methods and Run Automation (re-usable between runs)
+- Store and auto-apply XSRF tokens across requests
+- Export logs, copy results, and save per-field edits
 
-## 📖 Usage
+## Using the UI
 
-### 1. Import Collection
-- Click **"Import"** → Select your Postman collection JSON
-- Choose categories to import
-- All endpoints are automatically parsed and organized
+1) Import Collection
+- Click “Import”, select a Postman collection JSON
+- All folders and requests are parsed; duplicates are preserved (e.g., “Login (2)”) 
+- “Remove” clears the imported collection and UI state
 
-### 2. Test Individual APIs
-- Select a category and method
-- Click **"Load Template"** to populate the request builder
-- Edit headers, body, or parameters as needed
-- Click **"Send Request"** to test
+2) Select and Load Methods
+- Choose a category on the left; methods appear below
+- Click a method, then “Load Template” to populate the builder
 
-### 3. Run Automation
-- Add methods to the automation queue using **"Add"**
-- Reorder with **↑/↓** buttons
-- Click **"Run Automation"** to execute all queued requests
-- View results with ✅/❌ status indicators
+3) Build and Send Requests
+- Method: GET/POST/PUT/DELETE
+- URL: uses Base URL + Path (never paste a full URL into Path)
+- Headers/Body are JSON format; Query Parameters are URL-encoded format (param1=value1&param2=value2); click Save to persist each field
+- Send Request to execute immediately
 
-## 🔐 Authentication Features
+4) Automation
+- Click Add to queue the currently loaded method (with your saved edits)
+- Reorder with ↑/↓; Remove to unqueue
+- Run Automation executes top-to-bottom and can be re-run without rebuilding the list
 
-### Automatic Token Management
-- **Bearer Tokens**: Extracted from login responses and auto-added to requests
-- **XSRF Tokens**: Captured from headers, cookies, or Set-Cookie
-- **Variable Replacement**: `{{authToken}}` and `{{xsrf_token}}` automatically replaced
-- **Session Persistence**: Tokens maintained across all requests
+## Authentication handling
 
-### Supported Auth Types
-- Bearer Token authentication
-- XSRF/CSRF token protection
-- Custom header authentication
-- Cookie-based sessions
+- **Bearer Tokens**: Automatically extracted from login responses and added to all requests
+- **XSRF Tokens**: Extracted from response headers, cookies, or Set-Cookie
+- **Smart Headers**: If a header contains `{{xsrf_token}}` or `{{authToken}}`, it is replaced automatically
+- **Tip**: Place a login/auth step first in Automation so protected endpoints succeed
 
-## 🛠️ Advanced Features
+## Working with collections
 
-### Dynamic Templates
-- Edit request data and save as custom templates
-- Different data for each method in automation
-- Preserve original templates while using modified versions
+Supported Postman features:
+- Folders and nested folders (rendered as categories and subcategories)
+- Request name, method, URL, headers, body (raw/form-data), query params
+- Duplicate names preserved by suffixing: “Name (2)”, “Name (3)”, …
 
-### Smart Field Visibility
-- **GET**: Shows only query parameters
-- **POST/PUT**: Shows only request body
-- **DELETE**: Shows both body and parameters
-- **Headers**: Always visible for all methods
+Cleaning Postman variables:
+- Variables like `{{baseUrl}}`, `{{url}}`, etc. are removed from URLs
+- Paths are normalized so exported and built URLs are valid
 
-### Collection Variables
-- Automatic `{{baseUrl}}` replacement from collection variables
-- Support for all Postman variable types
-- Clean URL construction and validation
+## Exporting results
 
-## 📁 Project Structure
+- Use “Export” in Results to save a full, timestamped log
+- “Copy” places the log onto the clipboard
 
-```
-api-automation-tool/
-├── api_automation_tool.py      # Main application
-├── Test_API_Server.py          # Sample test server
-├── Test_API_Collection.json    # Sample Postman collection
-├── requirements.txt            # Python dependencies
-├── README.md                   # User documentation
-└── QUICK_START.md             # Quick start guide
-```
+## Tips
 
-## 🧪 Testing
+- Use Base URL for the host and scheme; put only the endpoint path in Path
+- For DELETE: both Body and Params are supported
+- Each request has a 30s timeout; SSL verification is disabled for convenience
 
-The project includes a complete test environment:
+## Troubleshooting
 
-### Test Server (`Test_API_Server.py`)
-- Flask-based mock server with 10 realistic endpoints
-- Authentication system with Bearer tokens
-- CRUD operations for users and products
-- Health check and system info endpoints
+- Missing or invalid XSRF token (403)
+  - Ensure a login/auth request runs before protected endpoints
+  - Confirm the server issues `XSRF-TOKEN` in headers/cookies
+- Path builds a wrong URL
+  - Keep only `/rest/...` in Path; put `https://host` in Base URL
+- Duplicate methods not visible
+  - Ensure you selected the parent category; the tool lists all nested methods and preserves duplicates with numeric suffixes
 
-### Test Collection (`Test_API_Collection.json`)
-- 4 categories: Authentication, User Management, Product Management, System
-- 10 endpoints covering various HTTP methods
-- Realistic request/response examples
-- Proper authentication flow
+## Contributing
 
-## 🔧 Configuration
+Contributions are welcome. Typical areas:
+- Parser improvements for more Postman formats
+- Additional auth flows (OAuth2, JWT helpers)
+- Better export/report formats
 
-### Environment Variables
-- No configuration required - works out of the box
-- SSL verification disabled for development convenience
-- 30-second timeout for all requests
+Please open an issue describing the change before submitting a PR.
 
-### Customization
-- Modify `Test_API_Collection.json` for different endpoints
-- Edit `Test_API_Server.py` for custom server behavior
-- Extend authentication logic in the main application
+## License
 
-## 🤝 Contributing
-
-Contributions are welcome! Here are some areas where help is needed:
-
-- **Parser Improvements**: Support for more Postman collection formats
-- **Authentication**: Additional auth flows (OAuth2, JWT helpers)
-- **Export Formats**: Better report generation (HTML, PDF, Excel)
-- **UI Enhancements**: Dark mode, themes, better mobile support
-- **Testing**: More comprehensive test coverage
-
-### Development Setup
-```bash
-# Fork the repository
-git clone https://github.com/furkankirmaci/api-automation.git
-cd api-automation
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install development dependencies
-pip install -r requirements.txt
-
-# Run tests
-python -m pytest tests/
-
-# Start development server
-python Test_API_Server.py
-```
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Built with Python, Tkinter, and Requests
-- Inspired by Postman's collection format
-- Thanks to the Flask community for the test server framework
-
----
-
-**Made with ❤️ for the API testing community**
-
-*Star this repository if you find it helpful!*
+This tool is provided as-is for general API testing and automation. Use at your own risk.

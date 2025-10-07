@@ -59,6 +59,7 @@ The server will start at `http://localhost:5000`
 - **No Manual Token Management**: The tool handles authentication automatically
 - **Sample Data**: Test server includes 3 users and 3 products pre-loaded
 - **Realistic Responses**: All endpoints return proper JSON with status codes
+- **Query Parameters**: Use URL-encoded format (page=1&limit=10) in the Query Parameters field
 - **Token Expiry**: Authentication tokens expire after 1 hour
 - **Port Configuration**: Server runs on port 5000 (modify if needed)
 
