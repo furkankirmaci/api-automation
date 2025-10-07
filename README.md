@@ -2,6 +2,9 @@
 
 A zero-config, GUI-based API runner for Postman collections. Import a collection, pick endpoints, and run single requests or full automations with dynamic data and XSRF handling.
 
+<img width="1917" height="1048" alt="image" src="https://github.com/user-attachments/assets/dd29e15f-fdcf-4156-9de8-37868ba8bd1f" />
+
+
 ## Quick start
 
 Requirements:
