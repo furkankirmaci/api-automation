@@ -7,7 +7,7 @@ import urllib3
 import webbrowser
 from datetime import datetime
 
-# SSL uyarılarını devre dışı bırak
+# Disable SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -87,7 +87,7 @@ class APITestAutomationTool:
     
     
     def create_widgets(self):
-        # Ana frame oluştur - modern tema
+        # Create main frame - modern theme
         main_frame = ttk.Frame(self.root, padding="10")
         main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
@@ -100,7 +100,7 @@ class APITestAutomationTool:
         self.create_single_screen(main_frame)
     
     def create_single_screen(self, main_frame):
-        # Sol panel - Login ve API seçimi (esnek boyut)
+        # Left panel - Login and API selection (flexible size)
         left_frame = ttk.Frame(main_frame)
         left_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), padx=(0, 5))
         
@@ -108,30 +108,30 @@ class APITestAutomationTool:
         middle_frame = ttk.Frame(main_frame)
         middle_frame.grid(row=0, column=1, sticky=(tk.W, tk.E, tk.N, tk.S), padx=(0, 5))
         
-        # Sağ panel - Results
+        # Right panel - Results
         right_frame = ttk.Frame(main_frame)
         right_frame.grid(row=0, column=2, sticky=(tk.W, tk.E, tk.N, tk.S))
         
-        # Grid weights - esnek boyutlandırma (tam ekran için optimize)
+        # Grid weights - flexible sizing (optimized for full screen)
         main_frame.columnconfigure(0, weight=2)  # Sol panel (daha dar)
-        main_frame.columnconfigure(1, weight=3)  # Orta panel (daha geniş)
-        main_frame.columnconfigure(2, weight=3)  # Sağ panel (daha geniş - loglar için)
+        main_frame.columnconfigure(1, weight=3)  # Middle panel (wider)
+        main_frame.columnconfigure(2, weight=3)  # Right panel (wider - for logs)
         
-        # Sol panel içeriği
+        # Left panel content
         self.create_left_panel(left_frame)
         
-        # Orta panel içeriği
+        # Middle panel content
         self.create_middle_panel(middle_frame)
         
-        # Sağ panel içeriği
+        # Right panel content
         self.create_right_panel(right_frame)
     
     def create_left_panel(self, parent):
-        # Import Collection bölümü (en üstte)
+        # Import Collection section (at the top)
         import_frame = ttk.LabelFrame(parent, text="📥 Import Collection", padding="10")
         import_frame.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
         
-        # Import Collection butonları
+        # Import Collection buttons
         import_button_frame = ttk.Frame(import_frame)
         import_button_frame.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=2)
         
@@ -148,11 +148,11 @@ class APITestAutomationTool:
         self.import_status_label = ttk.Label(import_frame, text="No collection imported", foreground="gray")
         self.import_status_label.grid(row=1, column=0, sticky=tk.W, pady=2)
         
-        # API seçimi bölümü (kompakt)
+        # API selection section (compact)
         api_frame = ttk.LabelFrame(parent, text="🎯 API Selection", padding="10")
         api_frame.grid(row=1, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
         
-        # API kategorileri (esnek boyut)
+        # API categories (flexible size)
         ttk.Label(api_frame, text="Category:").grid(row=0, column=0, sticky=tk.W, pady=2)
         
         # Category listbox with scrollbar
@@ -171,7 +171,7 @@ class APITestAutomationTool:
         # Categories will be populated when collection is imported
         self.category_listbox.insert(tk.END, "⚠️ No collection imported")
         
-        # API methodları (esnek boyut)
+        # API methods (flexible size)
         ttk.Label(api_frame, text="Method:").grid(row=2, column=0, sticky=tk.W, pady=(10, 2))
         self.method_listbox = tk.Listbox(api_frame, height=8, width=35)
         self.method_listbox.grid(row=3, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=2)
@@ -182,16 +182,16 @@ class APITestAutomationTool:
         self.load_template_button = ttk.Button(api_frame, text="Load Template", command=self.load_template, state=tk.NORMAL)
         self.load_template_button.grid(row=4, column=0, columnspan=2, pady=10, sticky=(tk.W, tk.E))
         
-        # Otomasyon bölümü - Modern stil (kompakt)
+        # Automation section - Modern style (compact)
         automation_frame = ttk.LabelFrame(parent, text="🤖 Automation", padding="10")
         automation_frame.grid(row=2, column=0, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 5))
         
-        # Method sıralama (esnek boyut)
+        # Method sorting (flexible size)
         ttk.Label(automation_frame, text="Method Order:").grid(row=0, column=0, sticky=tk.W, pady=2)
         self.method_order_listbox = tk.Listbox(automation_frame, height=6, width=35)
         self.method_order_listbox.grid(row=1, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=2)
         
-        # Sıralama butonları
+        # Sorting buttons
         order_button_frame = ttk.Frame(automation_frame)
         order_button_frame.grid(row=2, column=0, columnspan=2, pady=5)
         
@@ -200,7 +200,7 @@ class APITestAutomationTool:
         ttk.Button(order_button_frame, text="Remove", command=self.remove_from_order, width=8).grid(row=0, column=2, padx=1)
         ttk.Button(order_button_frame, text="Add", command=self.add_to_order, width=8).grid(row=0, column=3, padx=1)
         
-        # Otomasyon butonları
+        # Automation buttons
         automation_button_frame = ttk.Frame(automation_frame)
         automation_button_frame.grid(row=3, column=0, columnspan=2, pady=5, sticky=(tk.W, tk.E))
         
@@ -214,22 +214,22 @@ class APITestAutomationTool:
         self.automation_status_label = ttk.Label(automation_frame, text="Ready", foreground="blue")
         self.automation_status_label.grid(row=4, column=0, columnspan=2, pady=2, sticky=(tk.W, tk.E))
         
-        # Otomasyon değişkenleri
+        # Automation variables
         self.automation_running = False
         self.automation_methods = []
-        self._automation_queue = []  # Aktif çalıştırma sırasında tüketilecek kopya
-        self.automation_results = {}  # Method sonuçlarını saklamak için
+        self._automation_queue = []  # Copy to be consumed during active execution
+        self.automation_results = {}  # To store method results
         
         # Grid weights
         parent.columnconfigure(0, weight=1)
         parent.rowconfigure(0, weight=1)  # Import frame
-        parent.rowconfigure(1, weight=1)  # API frame (daha az alan)
+        parent.rowconfigure(1, weight=1)  # API frame (less space)
         parent.rowconfigure(2, weight=4)  # Automation frame (en fazla alan)
         api_frame.columnconfigure(0, weight=1)
         automation_frame.columnconfigure(0, weight=1)
     
     def create_middle_panel(self, parent):
-        # Request Builder bölümü - Modern stil (kompakt)
+        # Request Builder section - Modern style (compact)
         builder_frame = ttk.LabelFrame(parent, text="🛠️ Request Builder", padding="10")
         builder_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
@@ -285,7 +285,7 @@ class APITestAutomationTool:
         
         self.params_text = scrolledtext.ScrolledText(builder_frame, height=12, width=65, font=('Consolas', 8))
         self.params_text.grid(row=12, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=2)
-        self.params_text.insert(tk.END, '{\n  "param1": "value1",\n  "param2": "value2"\n}')
+        self.params_text.insert(tk.END, 'param1=value1&param2=value2')
         
         # Parameters Save Button
         self.save_params_button = ttk.Button(builder_frame, text="💾 Save Parameters", command=self.save_params, state=tk.NORMAL)
@@ -301,7 +301,7 @@ class APITestAutomationTool:
         builder_frame.columnconfigure(1, weight=1)
     
     def create_right_panel(self, parent):
-        # Results bölümü - Modern stil (kompakt)
+        # Results section - Modern style (compact)
         results_frame = ttk.LabelFrame(parent, text="📊 Results", padding="10")
         results_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
@@ -493,7 +493,7 @@ class APITestAutomationTool:
                     self.log_message(f"🔍 Found method '{self.selected_method}' in category: {category_key}")
                     break
         
-        # Save butonlarını aktif et
+        # Activate save buttons
         self.save_headers_button.config(state=tk.NORMAL)
         self.save_body_button.config(state=tk.NORMAL)
         self.save_params_button.config(state=tk.NORMAL)
@@ -536,7 +536,14 @@ class APITestAutomationTool:
             
             # Make request based on method
             if method.upper() == 'GET':
-                response = self.session.get(url, headers=headers, params=json.loads(params) if params else None, verify=False)
+                # Parse URL-encoded parameters
+                parsed_params = {}
+                if params:
+                    from urllib.parse import parse_qs
+                    parsed_params = parse_qs(params)
+                    # Convert from {key: [value]} to {key: value} format
+                    parsed_params = {key: value[0] if len(value) == 1 else value for key, value in parsed_params.items()}
+                response = self.session.get(url, headers=headers, params=parsed_params, verify=False)
             elif method.upper() == 'POST':
                 response = self.session.post(url, json=json.loads(body) if body else None, headers=headers, verify=False)
             elif method.upper() == 'PUT':
@@ -603,7 +610,7 @@ class APITestAutomationTool:
         self.log_message("STARTING FULL API TEST")
         self.log_message("="*80 + "\n")
         
-        for category, methods in self.vault_apis.items():
+        for category, methods in self.imported_apis.items():
             self.log_message(f"\n{'='*80}")
             self.log_message(f"Testing Category: {category}")
             self.log_message(f"{'='*80}\n")
@@ -662,7 +669,7 @@ class APITestAutomationTool:
         self.log_message(f"{'═'*100}")
         
         try:
-            # API çağrısını yap
+            # Make API call
             if method == "GET":
                 params = api_info.get("params", {})
                 response = self.session.get(url, headers=headers, params=params, verify=False, timeout=30)
@@ -676,25 +683,25 @@ class APITestAutomationTool:
                 self.log_message(f"❌ Unsupported method: {method}")
                 return False
             
-            # Sonucu detaylı logla
+            # Log result in detail
             success = response.status_code < 400
             status_icon = "✅" if success else "❌"
             self.log_message(f"\n{status_icon} STATUS CODE: {response.status_code}")
             self.log_message(f"📊 RESPONSE TIME: {response.elapsed.total_seconds():.3f}s")
             
-            # Headers'ları göster
+            # Show headers
             self.log_message(f"\n📋 RESPONSE HEADERS:")
             for key, value in response.headers.items():
                 self.log_message(f"   {key}: {value}")
             
-            # XSRF token'ı otomatik olarak çıkar ve sakla
+            # Automatically extract and store XSRF token
             if 'XSRF-TOKEN' in response.headers:
                 new_xsrf_token = response.headers['XSRF-TOKEN']
                 if new_xsrf_token and new_xsrf_token != self.xsrf_token:
                     self.xsrf_token = new_xsrf_token
                     self.log_message(f"🔐 XSRF Token updated from header: {self.xsrf_token[:20]}...")
             
-            # Set-Cookie header'ından XSRF token'ı çıkar
+            # Extract XSRF token from Set-Cookie header
             if 'Set-Cookie' in response.headers:
                 set_cookie = response.headers['Set-Cookie']
                 if 'XSRF-TOKEN=' in set_cookie:
@@ -713,7 +720,7 @@ class APITestAutomationTool:
             else:
                 self.log_message("⚠️ No XSRF Token available")
             
-            # Response body'yi detaylı göster
+            # Show response body in detail
             if response.text:
                 self.log_message(f"\n📄 RESPONSE BODY:")
                 try:
@@ -725,7 +732,7 @@ class APITestAutomationTool:
             else:
                 self.log_message("📄 RESPONSE BODY: (Empty)")
             
-            # Request detaylarını göster
+            # Show request details
             self.log_message(f"\n📤 REQUEST DETAILS:")
             self.log_message(f"   Headers: {json.dumps(headers, indent=2)}")
             if method == "GET" and api_info.get("params"):
@@ -759,7 +766,7 @@ class APITestAutomationTool:
         else:
             url = f"{base_url}{path}"
         
-        # Headers'ı parse et
+        # Parse headers
         try:
             headers = json.loads(template["headers"]) if template["headers"] else {}
         except:
@@ -787,9 +794,14 @@ class APITestAutomationTool:
         self.log_message(f"{'═'*100}")
         
         try:
-            # API çağrısını yap
+            # Make API call
             if method == "GET":
-                params = json.loads(template["params"]) if template["params"] else {}
+                # Parse URL-encoded parameters
+                params = {}
+                if template["params"]:
+                    from urllib.parse import parse_qs
+                    parsed_params = parse_qs(template["params"])
+                    params = {key: value[0] if len(value) == 1 else value for key, value in parsed_params.items()}
                 response = self.session.get(url, headers=headers, params=params, verify=False, timeout=30)
             elif method == "POST":
                 body = json.loads(template["body"]) if template["body"] else {}
@@ -798,12 +810,15 @@ class APITestAutomationTool:
                 body = json.loads(template["body"]) if template["body"] else {}
                 response = self.session.put(url, headers=headers, json=body, verify=False, timeout=30)
             elif method == "DELETE":
-                # DELETE method'u için body varsa kullan, yoksa params kullan
+                # For DELETE method, use body if available, otherwise use params
                 if template["body"]:
                     body = json.loads(template["body"])
                     response = self.session.delete(url, headers=headers, json=body, verify=False, timeout=30)
                 elif template["params"]:
-                    params = json.loads(template["params"])
+                    # Parse URL-encoded parameters
+                    from urllib.parse import parse_qs
+                    parsed_params = parse_qs(template["params"])
+                    params = {key: value[0] if len(value) == 1 else value for key, value in parsed_params.items()}
                     response = self.session.delete(url, headers=headers, params=params, verify=False, timeout=30)
                 else:
                     response = self.session.delete(url, headers=headers, verify=False, timeout=30)
@@ -811,20 +826,20 @@ class APITestAutomationTool:
                 self.log_message(f"❌ Unsupported method: {method}")
                 return False
             
-            # Sonucu detaylı logla
+            # Log result in detail
             success = response.status_code < 400
             status_icon = "✅" if success else "❌"
             self.log_message(f"\n{status_icon} STATUS CODE: {response.status_code}")
             self.log_message(f"📊 RESPONSE TIME: {response.elapsed.total_seconds():.3f}s")
             
-            # Headers'ları göster
+            # Show headers
             self.log_message(f"\n📋 RESPONSE HEADERS:")
             for key, value in response.headers.items():
                 self.log_message(f"   {key}: {value}")
             # Extract authentication tokens from response
             self._extract_auth_tokens(response)
             
-            # Response body'yi detaylı göster
+            # Show response body in detail
             if response.text:
                 self.log_message(f"\n📄 RESPONSE BODY:")
                 try:
@@ -836,7 +851,7 @@ class APITestAutomationTool:
             else:
                 self.log_message("📄 RESPONSE BODY: (Empty)")
             
-            # Request detaylarını göster
+            # Show request details
             self.log_message(f"\n📤 REQUEST DETAILS (Dynamic Template):")
             self.log_message(f"   Headers: {json.dumps(headers, indent=2)}")
             if template["body"]:
@@ -846,11 +861,7 @@ class APITestAutomationTool:
                 except:
                     self.log_message(f"   Body: {template['body']}")
             if template["params"]:
-                try:
-                    params_data = json.loads(template["params"])
-                    self.log_message(f"   Query Params: {json.dumps(params_data, indent=2)}")
-                except:
-                    self.log_message(f"   Query Params: {template['params']}")
+                self.log_message(f"   Query Params: {template['params']}")
             
             self.log_message(f"\n{'─'*100}")
             return success
@@ -897,7 +908,7 @@ class APITestAutomationTool:
             messagebox.showerror("Error", f"Invalid URL format: {url}\nPlease check Base URL and Path fields.")
             return
         
-        # Headers'ı parse et
+        # Parse headers
         try:
             headers_text = self.headers_text.get("1.0", tk.END).strip()
             headers = json.loads(headers_text) if headers_text else {}
@@ -919,7 +930,7 @@ class APITestAutomationTool:
             messagebox.showerror("Error", "Invalid JSON in headers")
             return
         
-        # Body'yi parse et - eğer alan görünürse
+        # Parse body - if field is visible
         body = {}
         if self.body_text.winfo_viewable():
             try:
@@ -929,14 +940,20 @@ class APITestAutomationTool:
                 messagebox.showerror("Error", "Invalid JSON in request body")
                 return
         
-        # Parameters'ı parse et - eğer alan görünürse
+        # Parse parameters - if field is visible
         params = {}
         if self.params_text.winfo_viewable():
             try:
                 params_text = self.params_text.get("1.0", tk.END).strip()
-                params = json.loads(params_text) if params_text else {}
-            except json.JSONDecodeError:
-                messagebox.showerror("Error", "Invalid JSON in query parameters")
+                if params_text:
+                    # Parse URL-encoded parameters (param1=value1&param2=value2)
+                    from urllib.parse import parse_qs, unquote
+                    # Use parse_qs to handle URL-encoded parameters
+                    parsed_params = parse_qs(params_text)
+                    # Convert from {key: [value]} to {key: value} format
+                    params = {key: value[0] if len(value) == 1 else value for key, value in parsed_params.items()}
+            except Exception as e:
+                messagebox.showerror("Error", f"Invalid query parameters format: {str(e)}")
                 return
         
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -947,7 +964,7 @@ class APITestAutomationTool:
         self.log_message(f"{'═'*100}")
         
         try:
-            # API çağrısını yap
+            # Make API call
             if method == "GET":
                 response = self.session.get(url, headers=headers, params=params, verify=False, timeout=30)
             elif method == "POST":
@@ -955,7 +972,7 @@ class APITestAutomationTool:
             elif method == "PUT":
                 response = self.session.put(url, headers=headers, json=body, params=params, verify=False, timeout=30)
             elif method == "DELETE":
-                # DELETE method'u için body varsa kullan, yoksa params kullan
+                # For DELETE method, use body if available, otherwise use params
                 if body:
                     response = self.session.delete(url, headers=headers, json=body, verify=False, timeout=30)
                 elif params:
@@ -966,24 +983,24 @@ class APITestAutomationTool:
                 self.log_message(f"❌ Unsupported method: {method}")
                 return
             
-            # Sonucu detaylı logla
+            # Log result in detail
             status_icon = "✅" if response.status_code < 400 else "❌"
             self.log_message(f"\n{status_icon} STATUS CODE: {response.status_code}")
             self.log_message(f"📊 RESPONSE TIME: {response.elapsed.total_seconds():.3f}s")
             
-            # Headers'ları göster
+            # Show headers
             self.log_message(f"\n📋 RESPONSE HEADERS:")
             for key, value in response.headers.items():
                 self.log_message(f"   {key}: {value}")
             
-            # XSRF token'ı otomatik olarak çıkar ve sakla
+            # Automatically extract and store XSRF token
             if 'XSRF-TOKEN' in response.headers:
                 new_xsrf_token = response.headers['XSRF-TOKEN']
                 if new_xsrf_token and new_xsrf_token != self.xsrf_token:
                     self.xsrf_token = new_xsrf_token
                     self.log_message(f"🔐 XSRF Token updated from header: {self.xsrf_token[:20]}...")
             
-            # Set-Cookie header'ından XSRF token'ı çıkar
+            # Extract XSRF token from Set-Cookie header
             if 'Set-Cookie' in response.headers:
                 set_cookie = response.headers['Set-Cookie']
                 if 'XSRF-TOKEN=' in set_cookie:
@@ -1002,7 +1019,7 @@ class APITestAutomationTool:
             else:
                 self.log_message("⚠️ No XSRF Token available")
             
-            # Response body'yi detaylı göster
+            # Show response body in detail
             if response.text:
                 self.log_message(f"\n📄 RESPONSE BODY:")
                 try:
@@ -1014,7 +1031,7 @@ class APITestAutomationTool:
             else:
                 self.log_message("📄 RESPONSE BODY: (Empty)")
             
-            # Request detaylarını göster
+            # Show request details
             self.log_message(f"\n📤 REQUEST DETAILS:")
             self.log_message(f"   Headers: {json.dumps(headers, indent=2)}")
             if body:
@@ -1047,7 +1064,7 @@ class APITestAutomationTool:
         # Method'u set et
         self.method_combo.set(api_info["method"])
 
-        # Base URL'yi set et - Collection'dan baseUrl değişkenini kullan
+        # Set base URL - use baseUrl variable from collection
         method_key = f"{self.selected_category} - {self.selected_method}"
         
         if method_key in self.saved_urls:
@@ -1056,7 +1073,7 @@ class APITestAutomationTool:
             self.base_url_entry.insert(0, self.saved_urls[method_key])
             self.log_message(f"💾 Loaded saved URL for: {self.selected_method}")
         else:
-            # Collection'dan baseUrl değişkenini kullan
+            # Use baseUrl variable from collection
             collection_base_url = self.collection_variables.get('baseUrl', '')
             if collection_base_url:
                 self.base_url_entry.delete(0, tk.END)
@@ -1073,28 +1090,28 @@ class APITestAutomationTool:
                 else:
                     self.log_message("⚠️ No base URL found in collection or API info")
 
-        # Path'i set et - Save edilen varsa onu kullan, yoksa API'den gelen path'i kullan
+        # Set path - use saved one if available, otherwise use path from API
         if method_key in self.saved_paths:
             # Save edilen path'i kullan
             self.path_entry.delete(0, tk.END)
             self.path_entry.insert(0, self.saved_paths[method_key])
             self.log_message(f"💾 Loaded saved path for: {self.selected_method}")
         else:
-            # API'den gelen path'i kullan - sadece path kısmını al
+            # Use path from API - take only the path part
             original_path = api_info.get("path", "/")
             path = self._extract_path_from_url(original_path)
             self.path_entry.delete(0, tk.END)
             self.path_entry.insert(0, path)
 
-        # Headers'ı set et - Save edilen varsa onu kullan, yoksa API'den gelen headers'ı kullan
+        # Set headers - use saved ones if available, otherwise use headers from API
         
         if method_key in self.saved_headers:
-            # Save edilen headers'ı kullan
+            # Use saved headers
             self.headers_text.delete("1.0", tk.END)
             self.headers_text.insert("1.0", self.saved_headers[method_key])
             self.log_message(f"💾 Loaded saved headers for: {self.selected_method}")
         else:
-            # API'den gelen headers'ı kullan, XSRF token'ı otomatik ekle
+            # Use headers from API, automatically add XSRF token
             headers = api_info.get("headers", {})
             
             # Clean Postman variables from headers
@@ -1116,14 +1133,14 @@ class APITestAutomationTool:
             self.headers_text.delete("1.0", tk.END)
             self.headers_text.insert("1.0", json.dumps(headers, indent=2))
 
-        # Body'yi set et - Save edilen varsa onu kullan, yoksa API'den gelen body'yi kullan
+        # Set body - use saved one if available, otherwise use body from API
         if method_key in self.saved_bodies:
             # Save edilen body'yi kullan
             self.body_text.delete("1.0", tk.END)
             self.body_text.insert("1.0", self.saved_bodies[method_key])
             self.log_message(f"💾 Loaded saved body for: {self.selected_method}")
         else:
-            # API'den gelen body'yi kullan
+            # Use body from API
             body = api_info.get("body", "")
             if body:
                 # Try to prettify JSON if it's valid JSON
@@ -1143,23 +1160,26 @@ class APITestAutomationTool:
                 self.body_text.delete("1.0", tk.END)
                 self.body_text.insert("1.0", json.dumps({}, indent=2))
 
-        # Parameters'ı set et - Save edilen varsa onu kullan, yoksa API'den gelen params'ı kullan
+        # Set parameters - use saved ones if available, otherwise use params from API
         if method_key in self.saved_params:
-            # Save edilen params'ı kullan
+            # Use saved params
             self.params_text.delete("1.0", tk.END)
             self.params_text.insert("1.0", self.saved_params[method_key])
             self.log_message(f"💾 Loaded saved params for: {self.selected_method}")
         else:
-            # API'den gelen params'ı kullan
+            # Use params from API
             params = api_info.get("params", {})
             if params:
                 self.params_text.delete("1.0", tk.END)
-                self.params_text.insert("1.0", json.dumps(params, indent=2))
+                # Convert params dict to URL-encoded format
+                from urllib.parse import urlencode
+                params_string = urlencode(params)
+                self.params_text.insert("1.0", params_string)
 
-        # Method tipine göre alanları göster/gizle
+        # Show/hide fields according to method type
         self._update_field_visibility(api_info)
 
-        # Dynamic template'i güncelle
+        # Update dynamic template
         self._update_dynamic_template()
 
         self.log_message(f"✓ Template loaded for: {self.selected_method}")
@@ -1168,7 +1188,7 @@ class APITestAutomationTool:
         """Import APIs from API collection"""
         from tkinter import filedialog
         
-        # File dialog aç
+        # Open file dialog
         file_path = filedialog.askopenfilename(
             title="Select API Collection File",
             filetypes=[("JSON files", "*.json"), ("All files", "*.*")]
@@ -1180,11 +1200,11 @@ class APITestAutomationTool:
         try:
             self.log_message("📥 Importing API collection...")
             
-            # JSON dosyasını oku
+            # Read JSON file
             with open(file_path, 'r', encoding='utf-8') as f:
                 collection_data = json.load(f)
             
-            # Önce collection'daki kategorileri bul
+            # First find categories in collection
             available_categories = self._find_categories_in_collection(collection_data)
             
             if not available_categories:
@@ -1192,14 +1212,14 @@ class APITestAutomationTool:
                 self.import_status_label.config(text="⚠️ No categories found", foreground="orange")
                 return
             
-            # Kategori seçim dialog'unu göster
+            # Show category selection dialog
             selected_categories = self._show_category_selection_dialog(available_categories)
             
             if not selected_categories:
                 self.log_message("❌ No categories selected. Import cancelled.")
                 return
             
-            # Seçilen kategorileri import et
+            # Import selected categories
             imported_count = self._parse_api_collection(collection_data, selected_categories)
             
             if imported_count > 0:
@@ -1207,22 +1227,22 @@ class APITestAutomationTool:
                 self.log_message(f"✅ Successfully imported {imported_count} API methods from {len(selected_categories)} categories!")
                 self.log_message(f"📊 Imported categories: {list(self.imported_apis.keys())}")
                 
-                # Method listesini temizle (eski değerleri kaldır)
+                # Clear method list (remove old values)
                 self.method_listbox.delete(0, tk.END)
                 self.selected_category = ""
                 self.selected_method = ""
                 
-                # Import status'u güncelle
+                # Update import status
                 self.import_status_label.config(text=f"✅ {imported_count} APIs imported", foreground="green")
                 self.remove_collection_button.config(state=tk.NORMAL)
                 self.export_collection_button.config(state=tk.NORMAL)
                 
-                # Category listesini güncelle
+                # Update category list
                 self._update_category_list()
                 
                 # Butonlar hep aktif kalacak
                 
-                # UI'yi güncelle
+                # Update UI
                 self.root.update_idletasks()
                 
                 self.log_message("🔄 Method list cleared. Please select a category to see imported methods.")
@@ -1246,7 +1266,7 @@ class APITestAutomationTool:
         if not result:
             return
         
-        # Collection'ı temizle
+        # Clear collection
         self.imported_apis = {}
         self.category_structure = {}
         self.expanded_categories.clear()
@@ -1254,7 +1274,7 @@ class APITestAutomationTool:
         self.collection_variables = {}
         self.auth_token = ""  # Clear auth token when collection is removed
         
-        # Status'u güncelle
+        # Update status
         self.import_status_label.config(text="No collection imported", foreground="gray")
         # Remove button stays active
         self.export_collection_button.config(state=tk.DISABLED)
@@ -1264,10 +1284,10 @@ class APITestAutomationTool:
         self.selected_category = ""
         self.selected_method = ""
         
-        # Category listesini güncelle
+        # Update category list
         self._update_category_list()
         
-        # Tüm form alanlarını temizle
+        # Clear all form fields
         self._clear_all_fields()
         
         # Automation listesini temizle
@@ -1277,7 +1297,7 @@ class APITestAutomationTool:
         # Dynamic templates'i temizle
         self.dynamic_templates.clear()
         
-        # Saved values'ları temizle
+        # Clear saved values
         self.saved_headers.clear()
         self.saved_bodies.clear()
         self.saved_params.clear()
@@ -1316,7 +1336,7 @@ class APITestAutomationTool:
         
         from tkinter import filedialog
         
-        # File dialog aç
+        # Open file dialog
         file_path = filedialog.asksaveasfilename(
             title="Export API Collection",
             defaultextension=".json",
@@ -1408,10 +1428,16 @@ class APITestAutomationTool:
                             except:
                                 body_dict = {}
                             
-                            # Parse params
-                            try:
-                                params_dict = json.loads(saved_params) if saved_params else {}
-                            except:
+                            # Parse params (URL-encoded format)
+                            params_dict = {}
+                            if saved_params:
+                                from urllib.parse import parse_qs
+                                try:
+                                    parsed_params = parse_qs(saved_params)
+                                    params_dict = {key: value[0] if len(value) == 1 else value for key, value in parsed_params.items()}
+                                except:
+                                    params_dict = api_info.get('params', {})
+                            else:
                                 params_dict = api_info.get('params', {})
                             
                             # Create request item
@@ -2076,35 +2102,6 @@ class APITestAutomationTool:
         # If it doesn't start with / and doesn't contain ://, assume it's a path and add /
         return '/' + cleaned_url.lstrip('/')
     
-    def _extract_subcategory(self, method_name):
-        """Extract subcategory from method name"""
-        # Common patterns for subcategories
-        patterns = {
-            'Application Token': ['Application Token', 'Token'],
-            'Vault Account': ['Vault Account', 'Account'],
-            'User': ['User', 'Users'],
-            'Group': ['Group', 'Groups'],
-            'Device': ['Device', 'Devices'],
-            'Session': ['Session', 'Sessions'],
-            'SSH': ['SSH', 'Key'],
-            'MFA': ['MFA', 'OTP', 'TFA'],
-            'Policy': ['Policy', 'Policies'],
-            'System': ['System', 'Config'],
-            'Tenant': ['Tenant', 'Multitenancy'],
-            'Database': ['Database', 'Masking', 'SQL'],
-            'Remote Access': ['Remote', 'Access', 'Request']
-        }
-        
-        for subcategory, keywords in patterns.items():
-            for keyword in keywords:
-                if keyword.lower() in method_name.lower():
-                    return subcategory
-        
-        # If no pattern matches, return first word or "General"
-        words = method_name.split()
-        if words:
-            return words[0]
-        return "General"
     
     def _update_field_visibility(self, api_info):
         """Show/hide fields based on method type"""
@@ -2302,7 +2299,7 @@ class APITestAutomationTool:
         
         method_name = f"{self.selected_category} - {self.selected_method}"
         if method_name not in self.automation_methods:
-            # Önce mevcut form değerlerini dynamic template olarak kaydet
+            # First save current form values as dynamic template
             self._update_dynamic_template()
             
             self.automation_methods.append(method_name)
